@@ -1,1 +1,1 @@
-Last letter game with React and Speec Recognition (atolye15)
+Last letter game with React and Speec Recognition (Atolye15)
