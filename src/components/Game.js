@@ -25,16 +25,25 @@ const Game = () => {
 
   const checkUserAnswer = (answer) => {
     setUserAnswer(answer);
-    console.log("User answer is:" + answer);
+
+    console.log("User answer is: " + answer);
     answer = answer.toLowerCase();
-    if (names.includes(answer)) {
+
+    const lastLetterOfComputerAnswer = getLastLetter(randomName);
+    const possibleCorrectAnswers = names.filter(
+      (name) => name.charAt(0) === lastLetterOfComputerAnswer
+    );
+
+    console.log(possibleCorrectAnswers);
+
+    if (possibleCorrectAnswers.includes(answer)) {
       console.log("user answer is true");
 
       setIsUserTurn(false);
 
       play(answer);
     } else {
-      console.log("user answer is not a name");
+      console.log("user answer is not correct");
       setIsGameEnd(true);
     }
   };
@@ -52,9 +61,9 @@ const Game = () => {
     findNewName(lastLetter);
   };
 
-  const getLastLetter = (withUserAnswer) => {
-    const lastLetterOfUserAnswer = withUserAnswer.slice(-1);
-    return lastLetterOfUserAnswer;
+  const getLastLetter = (word) => {
+    const lastLetter = word.slice(-1);
+    return lastLetter;
   };
 
   const findNewName = (withLastLetter) => {
