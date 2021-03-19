@@ -4,6 +4,9 @@
 //   let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 //   let analyser = audioCtx.createAnalyser();
 
+//   var canvasCtx = canvas.getContext("2d");
+//   var canvas = document.querySelector(".visualizer");
+
 //   //   source = audioCtx.createMediaStreamSource(stream);
 //   //   source.connect(analyser);
 //   //   analyser.connect(distortion);
@@ -17,9 +20,12 @@
 //   var dataArray = new Uint8Array(bufferLength);
 
 //   canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+//   var bufferLength = analyser.fftSize;
 
 //   function draw() {
-//     drawVisual = requestAnimationFrame(draw);
+//     let drawVisual = requestAnimationFrame(draw);
+//     var barHeight;
+//     var barWidth = (WIDTH / bufferLengthAlt) * 2.5;
 
 //     analyser.getByteFrequencyData(dataArray);
 
@@ -27,7 +33,7 @@
 //     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
 //     for (var i = 0; i < bufferLength; i++) {
-//       barHeight = dataArray[i] / 2;
+//       let barHeight = dataArray[i] / 2;
 
 //       canvasCtx.fillStyle = "rgb(" + (barHeight + 100) + ",50,50)";
 //       canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight);

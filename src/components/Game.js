@@ -5,26 +5,34 @@ import names from "../data/names.json";
 import Counter from "./Counter";
 import SpeechRecognition from "../components/SpeechRecognition";
 import CircularProgress from "@material-ui/core/CircularProgress";
+//import AudioVisualizer from "./AudioVisualizer";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  mainBox: {
+    padding: "30px",
+  },
+}));
 
 const Game = () => {
   const classes = useStyles();
   const [isUserTurn, setIsUserTurn] = useState(true);
   const [isGameEnd, setIsGameEnd] = useState(false);
+  const [userAnswer, setUserAnswer] = useState("");
 
   const [randomName, setRandomName] = useState(
     names[Math.floor(Math.random() * names.length)]
   );
 
   const checkUserAnswer = (answer) => {
+    setUserAnswer(answer);
     console.log("User answer is:" + answer);
     answer = answer.toLowerCase();
     if (names.includes(answer)) {
       console.log("user answer is true");
+
       setIsUserTurn(false);
 
-      play();
+      play(answer);
     } else {
       console.log("user answer is not a name");
       setIsGameEnd(true);
@@ -35,37 +43,59 @@ const Game = () => {
     const randomSeconds = Math.floor(Math.random() * 4) + 1; //returns a random int between 1-5
     setTimeout(function () {
       setIsUserTurn(true);
+      setUserAnswer("");
     }, randomSeconds * 1000);
   };
 
-  const findNewName = () => {
-    randomThinkingTime(); //dummy thinking for computer
-    setRandomName(names[Math.floor(Math.random() * names.length)]);
+  const play = (withUserAnswer) => {
+    const lastLetter = getLastLetter(withUserAnswer);
+    findNewName(lastLetter);
   };
 
-  const play = () => {
-    findNewName();
+  const getLastLetter = (withUserAnswer) => {
+    const lastLetterOfUserAnswer = withUserAnswer.slice(-1);
+    return lastLetterOfUserAnswer;
+  };
+
+  const findNewName = (withLastLetter) => {
+    randomThinkingTime(); //dummy thinking for computer
+    const availableNames = names.filter(
+      (name) => name.charAt(0) === withLastLetter
+    );
+
+    setRandomName(
+      availableNames[Math.floor(Math.random() * availableNames.length)]
+    );
   };
 
   const stopTheGame = () => {
-    //setIsUserTurn(false);
+    setIsUserTurn(false);
     setIsGameEnd(true);
   };
 
   return (
     <>
-      <div>
-        {isUserTurn && <Typography variant="h2">{randomName}</Typography>}
+      <div className={classes.mainBox}>
+        {isUserTurn && <SpeechRecognition onUserAnswer={checkUserAnswer} />}
+
+        {userAnswer && (
+          <Typography variant="h2">Your answer was: {userAnswer}</Typography>
+        )}
+
+        {isUserTurn && !isGameEnd && (
+          <Typography variant="h2">{randomName}</Typography>
+        )}
         {isGameEnd && <Typography variant="h2">Game Ends</Typography>}
         {!isGameEnd &&
           (isUserTurn ? (
             <Counter timeEnds={stopTheGame} />
           ) : (
-            <CircularProgress color="primary" />
+            <div>
+              <CircularProgress color="primary" />
+              <Typography variant="h6">Computer is thinking...</Typography>
+            </div>
           ))}
       </div>
-
-      <SpeechRecognition onUserAnswer={checkUserAnswer} />
     </>
   );
 };

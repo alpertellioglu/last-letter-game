@@ -2,7 +2,7 @@ import { Button, Typography } from "@material-ui/core";
 import { React, useState } from "react";
 
 const SpeechRecognition = (props) => {
-  const [userAnwswer, setUserAnswer] = useState("");
+  const [userAnswer, setUserAnswer] = useState("");
   var SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   var SpeechGrammarList =
@@ -53,7 +53,12 @@ const SpeechRecognition = (props) => {
       >
         Start speaking
       </Button>
-      <Typography variant="h4">{userAnwswer}</Typography>
+      {/* {userAnswer && (
+        <>
+          <Typography variant="h4">Your answer was: </Typography>
+          <Typography variant="h4">{userAnswer}</Typography>
+        </>
+      )} */}
     </>
   );
 };
