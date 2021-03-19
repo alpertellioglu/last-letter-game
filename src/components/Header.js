@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = (props) => {
   const classes = useStyles();
 
   return (
@@ -45,7 +45,7 @@ const Header = () => {
             Score
           </Typography>
           <Typography variant="h2" color="secondary">
-            0
+            {props.score}
           </Typography>
         </div>
       </div>

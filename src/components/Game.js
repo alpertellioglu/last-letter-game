@@ -13,12 +13,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Game = () => {
+const Game = (props) => {
   const classes = useStyles();
   const [isUserTurn, setIsUserTurn] = useState(true);
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [userAnswer, setUserAnswer] = useState("");
-
   const [randomName, setRandomName] = useState(
     names[Math.floor(Math.random() * names.length)]
   );
@@ -34,13 +33,15 @@ const Game = () => {
       (name) => name.charAt(0) === lastLetterOfComputerAnswer
     );
 
-    console.log(possibleCorrectAnswers);
-
     if (possibleCorrectAnswers.includes(answer)) {
-      console.log("user answer is true");
+      //user answer is true
+
+      //   let score = sessionStorage.getItem("score");
+      //   score++;
+      //   sessionStorage.setItem("score", score);
+      props.onScore();
 
       setIsUserTurn(false);
-
       play(answer);
     } else {
       console.log("user answer is not correct");
@@ -72,9 +73,12 @@ const Game = () => {
       (name) => name.charAt(0) === withLastLetter
     );
 
-    setRandomName(
-      availableNames[Math.floor(Math.random() * availableNames.length)]
-    );
+    const newRandomName =
+      availableNames[Math.floor(Math.random() * availableNames.length)];
+
+    // usedNames.push(newRandomName);
+    // console.log(usedNames);
+    setRandomName(newRandomName);
   };
 
   const stopTheGame = () => {

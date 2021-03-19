@@ -22,13 +22,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//sessionStorage.setItem("score", 0);
+
 const MainContainer = () => {
   const classes = useStyles();
   const [isStarted, setIsStarted] = useState(false);
+  const [score, setScore] = useState(0);
+
+  const increaseScore = () => {
+    const newScore = score + 1;
+    setScore(newScore);
+  };
   return (
     <>
       <div className={classes.container}>
-        <Header />
+        <Header score={score} />
         <div className={classes.start}>
           {!isStarted ? (
             <div>
@@ -47,7 +55,7 @@ const MainContainer = () => {
               </div>
             </div>
           ) : (
-            <Game />
+            <Game onScore={increaseScore} />
           )}
         </div>
       </div>
