@@ -3,6 +3,8 @@ function speech(phrase) {
 
   const utterThis = new SpeechSynthesisUtterance(phrase);
 
+  utterThis.lang = "tr";
+
   synth.speak(utterThis);
 }
 
