@@ -6,6 +6,7 @@ import Counter from "./Counter";
 import SpeechRecognition from "../components/SpeechRecognition";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Results from "./Results";
+import { speech } from "./SpeechUtterance";
 //import AudioVisualizer from "./AudioVisualizer";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,7 @@ const Game = (props) => {
     let mounted = true;
     if (mounted) {
       let usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
+      speech(randomName);
       usedWords.push(randomName);
       sessionStorage.setItem("usedWords", JSON.stringify(usedWords));
     }
@@ -85,13 +87,6 @@ const Game = (props) => {
     }
   };
 
-  const randomThinkingTime = () => {
-    const randomSeconds = Math.floor(Math.random() * 4) + 1; //returns a random int between 1-5
-    setTimeout(function () {
-      setIsUserTurn(true);
-    }, randomSeconds * 1000);
-  };
-
   const play = (withUserAnswer) => {
     const lastLetter = getLastLetter(withUserAnswer);
     findNewName(lastLetter);
@@ -103,7 +98,6 @@ const Game = (props) => {
   };
 
   const findNewName = (withLastLetter) => {
-    randomThinkingTime(); //dummy thinking for computer
     const availableNames = names.filter(
       (name) => name.charAt(0) === withLastLetter
     );
@@ -111,7 +105,13 @@ const Game = (props) => {
     const newRandomName =
       availableNames[Math.floor(Math.random() * availableNames.length)];
 
-    setRandomName(newRandomName);
+    //dummy thinking for computer
+    const randomSeconds = Math.floor(Math.random() * 4) + 1;
+
+    setTimeout(function () {
+      setRandomName(newRandomName);
+      setIsUserTurn(true);
+    }, randomSeconds * 1000);
   };
 
   const stopTheGame = () => {
