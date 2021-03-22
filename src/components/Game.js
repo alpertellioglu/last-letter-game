@@ -75,7 +75,7 @@ const Game = (props) => {
     const randomSeconds = Math.floor(Math.random() * 4) + 1; //returns a random int between 1-5
     setTimeout(function () {
       setIsUserTurn(true);
-      setUserAnswer("");
+      //setUserAnswer("");
     }, randomSeconds * 1000);
   };
 
@@ -98,13 +98,6 @@ const Game = (props) => {
     const newRandomName =
       availableNames[Math.floor(Math.random() * availableNames.length)];
 
-    // usedNames.push(newRandomName);
-    // console.log(usedNames);
-
-    // let usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
-    // usedWords.push(newRandomName);
-    // sessionStorage.setItem("usedWords", JSON.stringify(usedWords));
-
     setRandomName(newRandomName);
   };
 
@@ -122,7 +115,7 @@ const Game = (props) => {
           <SpeechRecognition onUserAnswer={checkUserAnswer} />
         )}
 
-        {userAnswer && !isGameEnd && (
+        {!isUserTurn && !isGameEnd && (
           <Typography variant="h2">Your answer was: {userAnswer}</Typography>
         )}
 
