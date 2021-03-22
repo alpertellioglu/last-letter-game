@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//sessionStorage.setItem("score", 0);
+sessionStorage.setItem("usedWords", JSON.stringify([]));
 
 const MainContainer = () => {
   const classes = useStyles();

@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import names from "../data/names.json";
 import Counter from "./Counter";
 import SpeechRecognition from "../components/SpeechRecognition";
@@ -22,6 +22,16 @@ const Game = (props) => {
     names[Math.floor(Math.random() * names.length)]
   );
 
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      let usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
+      usedWords.push(randomName);
+      sessionStorage.setItem("usedWords", JSON.stringify(usedWords));
+    }
+    return () => (mounted = false);
+  }, [randomName]);
+
   const checkUserAnswer = (answer) => {
     setUserAnswer(answer);
 
@@ -33,19 +43,31 @@ const Game = (props) => {
       (name) => name.charAt(0) === lastLetterOfComputerAnswer
     );
 
-    if (possibleCorrectAnswers.includes(answer)) {
+    if (!isAlreadyUsed(answer) && possibleCorrectAnswers.includes(answer)) {
       //user answer is true
 
-      //   let score = sessionStorage.getItem("score");
-      //   score++;
-      //   sessionStorage.setItem("score", score);
       props.onScore();
+
+      let usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
+      usedWords.push(answer);
+      sessionStorage.setItem("usedWords", JSON.stringify(usedWords));
 
       setIsUserTurn(false);
       play(answer);
     } else {
       console.log("user answer is not correct");
       setIsGameEnd(true);
+    }
+  };
+
+  const isAlreadyUsed = (answer) => {
+    const alreadyUsedAnswers = JSON.parse(sessionStorage.getItem("usedWords"));
+    if (alreadyUsedAnswers.includes(answer)) {
+      //console.log("answer is already used");
+      return true;
+    } else {
+      //console.log("answer has not used yet");
+      return false;
     }
   };
 
@@ -78,6 +100,11 @@ const Game = (props) => {
 
     // usedNames.push(newRandomName);
     // console.log(usedNames);
+
+    // let usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
+    // usedWords.push(newRandomName);
+    // sessionStorage.setItem("usedWords", JSON.stringify(usedWords));
+
     setRandomName(newRandomName);
   };
 
@@ -86,19 +113,36 @@ const Game = (props) => {
     setIsGameEnd(true);
   };
 
+  const handleRestart = () => {};
+
   return (
     <>
       <div className={classes.mainBox}>
-        {isUserTurn && <SpeechRecognition onUserAnswer={checkUserAnswer} />}
+        {isUserTurn && !isGameEnd && (
+          <SpeechRecognition onUserAnswer={checkUserAnswer} />
+        )}
 
-        {userAnswer && (
+        {userAnswer && !isGameEnd && (
           <Typography variant="h2">Your answer was: {userAnswer}</Typography>
         )}
 
         {isUserTurn && !isGameEnd && (
           <Typography variant="h2">{randomName}</Typography>
         )}
-        {isGameEnd && <Typography variant="h2">Game Ends</Typography>}
+        {isGameEnd && (
+          <div>
+            <Typography variant="h2">Game Ends</Typography>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              onClick={handleRestart}
+              style={{ marginTop: "50px" }}
+            >
+              Restart
+            </Button>
+          </div>
+        )}
         {!isGameEnd &&
           (isUserTurn ? (
             <Counter timeEnds={stopTheGame} />
