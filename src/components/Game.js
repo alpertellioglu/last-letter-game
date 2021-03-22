@@ -5,11 +5,25 @@ import names from "../data/names.json";
 import Counter from "./Counter";
 import SpeechRecognition from "../components/SpeechRecognition";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Results from "./Results";
 //import AudioVisualizer from "./AudioVisualizer";
 
 const useStyles = makeStyles((theme) => ({
   mainBox: {
     padding: "30px",
+  },
+  resultsContainer: {
+    display: "flex",
+    width: "90%",
+    margin: "auto",
+    justifyContent: "space-between",
+  },
+  flexLeft: {
+    marginTop: "10%",
+    width: "30%",
+  },
+  flexRight: {
+    width: "60%",
   },
 }));
 
@@ -75,7 +89,6 @@ const Game = (props) => {
     const randomSeconds = Math.floor(Math.random() * 4) + 1; //returns a random int between 1-5
     setTimeout(function () {
       setIsUserTurn(true);
-      //setUserAnswer("");
     }, randomSeconds * 1000);
   };
 
@@ -122,20 +135,7 @@ const Game = (props) => {
         {isUserTurn && !isGameEnd && (
           <Typography variant="h2">{randomName}</Typography>
         )}
-        {isGameEnd && (
-          <div>
-            <Typography variant="h2">Game Ends</Typography>
-            <Button
-              variant="outlined"
-              color="primary"
-              size="large"
-              onClick={handleRestart}
-              style={{ marginTop: "50px" }}
-            >
-              Restart
-            </Button>
-          </div>
-        )}
+
         {!isGameEnd &&
           (isUserTurn ? (
             <Counter timeEnds={stopTheGame} />
@@ -145,6 +145,29 @@ const Game = (props) => {
               <Typography variant="h6">Computer is thinking...</Typography>
             </div>
           ))}
+
+        {isGameEnd && (
+          <div className={classes.resultsContainer}>
+            <div className={classes.flexLeft}>
+              <Typography variant="h3">You Lost</Typography>
+              <Button
+                variant="outlined"
+                color="primary"
+                size="large"
+                onClick={handleRestart}
+                style={{ marginTop: "50px" }}
+              >
+                Restart
+              </Button>
+            </div>
+
+            <div className={classes.flexRight}>
+              <Results
+                usedWords={JSON.parse(sessionStorage.getItem("usedWords"))}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
