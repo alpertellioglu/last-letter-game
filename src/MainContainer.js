@@ -33,6 +33,11 @@ const MainContainer = () => {
     const newScore = score + 1;
     setScore(newScore);
   };
+
+  const resetScore = () => {
+    setScore(0);
+  };
+
   return (
     <>
       <div className={classes.container}>
@@ -55,7 +60,7 @@ const MainContainer = () => {
               </div>
             </div>
           ) : (
-            <Game onScore={increaseScore} />
+            <Game onScore={increaseScore} onReset={resetScore} />
           )}
         </div>
       </div>

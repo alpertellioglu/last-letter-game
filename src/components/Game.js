@@ -143,7 +143,7 @@ const Game = (props) => {
 
   const handleRestart = () => {
     sessionStorage.setItem("usedWords", JSON.stringify([]));
-
+    props.onReset();
     setUserAnswer("");
     setIsGameEnd(false);
     setRandomName(names[Math.floor(Math.random() * names.length)]);
