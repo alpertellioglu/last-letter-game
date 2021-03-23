@@ -2,15 +2,15 @@ import { Button, Typography } from "@material-ui/core";
 import { React, useState } from "react";
 
 const SpeechRecognition = (props) => {
-  var SpeechRecognition =
+  let SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
-  var SpeechGrammarList =
+  let SpeechGrammarList =
     window.SpeechGrammarList || window.webkitSpeechGrammarList;
-  var SpeechRecognitionEvent =
+  let SpeechRecognitionEvent =
     window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
-  var recognition = new SpeechRecognition();
-  var speechRecognitionList = new SpeechGrammarList();
+  let recognition = new SpeechRecognition();
+  let speechRecognitionList = new SpeechGrammarList();
   //   speechRecognitionList.addFromString(grammar, 1);
   //   recognition.grammars = speechRecognitionList;
   recognition.continuous = false;
@@ -24,9 +24,7 @@ const SpeechRecognition = (props) => {
   };
 
   recognition.onresult = function (event) {
-    //console.log(event.results[0][0].transcript);
     const answer = event.results[0][0].transcript;
-    //console.log(answer);
     console.log("Confidence: " + event.results[0][0].confidence);
     props.onUserAnswer(answer);
   };
@@ -49,7 +47,7 @@ const SpeechRecognition = (props) => {
         size="large"
         onClick={handleClick}
       >
-        Start speaking
+        Press to speak
       </Button>
     </>
   );

@@ -7,6 +7,9 @@ import SpeechRecognition from "../components/SpeechRecognition";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Results from "./Results";
 import { speech } from "./SpeechUtterance";
+import { handleLetterI, successWithPossibility } from "./Helpers";
+import Confetti from "react-confetti";
+
 //import AudioVisualizer from "./AudioVisualizer";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +35,7 @@ const Game = (props) => {
   const classes = useStyles();
   const [isUserTurn, setIsUserTurn] = useState(true);
   const [isGameEnd, setIsGameEnd] = useState(false);
+  const [whoWon, setWhoWon] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
   const [randomName, setRandomName] = useState(
     names[Math.floor(Math.random() * names.length)]
@@ -51,8 +55,12 @@ const Game = (props) => {
   const checkUserAnswer = (answer) => {
     setUserAnswer(answer);
 
-    console.log("User answer is: " + answer);
+    if (answer.charAt(0) === "İ") {
+      answer = handleLetterI(answer);
+    }
+
     answer = answer.toLowerCase();
+    console.log("User answer is: " + answer);
 
     const lastLetterOfComputerAnswer = getLastLetter(randomName);
     const possibleCorrectAnswers = names.filter(
@@ -72,7 +80,8 @@ const Game = (props) => {
       play(answer);
     } else {
       console.log("user answer is not correct");
-      setIsGameEnd(true);
+      userLost();
+      //setIsGameEnd(true);
     }
   };
 
@@ -88,8 +97,16 @@ const Game = (props) => {
   };
 
   const play = (withUserAnswer) => {
-    const lastLetter = getLastLetter(withUserAnswer);
-    findNewName(lastLetter);
+    if (successWithPossibility(70)) {
+      const lastLetter = getLastLetter(withUserAnswer);
+      findNewName(lastLetter);
+    } else {
+      console.log("computer can not find an answer");
+      setTimeout(function () {
+        setWhoWon("user");
+        stopTheGame();
+      }, 5000);
+    }
   };
 
   const getLastLetter = (word) => {
@@ -114,6 +131,11 @@ const Game = (props) => {
     }, randomSeconds * 1000);
   };
 
+  const userLost = () => {
+    setWhoWon("computer");
+    stopTheGame();
+  };
+
   const stopTheGame = () => {
     setIsUserTurn(false);
     setIsGameEnd(true);
@@ -131,10 +153,6 @@ const Game = (props) => {
   return (
     <>
       <div className={classes.mainBox}>
-        {isUserTurn && !isGameEnd && (
-          <SpeechRecognition onUserAnswer={checkUserAnswer} />
-        )}
-
         {!isUserTurn && !isGameEnd && (
           <Typography variant="h2">Your answer was: {userAnswer}</Typography>
         )}
@@ -145,7 +163,7 @@ const Game = (props) => {
 
         {!isGameEnd &&
           (isUserTurn ? (
-            <Counter timeEnds={stopTheGame} />
+            <Counter timeEnds={userLost} />
           ) : (
             <div>
               <CircularProgress color="primary" />
@@ -153,10 +171,25 @@ const Game = (props) => {
             </div>
           ))}
 
+        {isUserTurn && !isGameEnd && (
+          <SpeechRecognition onUserAnswer={checkUserAnswer} />
+        )}
+
         {isGameEnd && (
           <div className={classes.resultsContainer}>
             <div className={classes.flexLeft}>
-              <Typography variant="h3">You Lost</Typography>
+              {whoWon === "computer" ? (
+                <Typography variant="h3">You Lost</Typography>
+              ) : (
+                <div>
+                  <Confetti
+                    width={window.innerWidth}
+                    height={window.innerHeight}
+                  />
+                  <Typography variant="h3">You Won</Typography>
+                </div>
+              )}
+
               <Button
                 variant="outlined"
                 color="primary"
