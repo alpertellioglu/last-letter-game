@@ -61,6 +61,9 @@ const Results = (props) => {
           <Typography variant="h4">
             <Box fontWeight={900}>Game Table</Box>
           </Typography>
+          <Typography variant="body1">
+            (difficulty was: {props.difficulty})
+          </Typography>
         </div>
         <div className={classes.usedWords}>
           {props.usedWords.map((word, index) => (

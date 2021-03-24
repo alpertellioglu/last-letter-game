@@ -53,6 +53,9 @@ const Game = (props) => {
   }, [randomName]);
 
   const checkUserAnswer = (answer) => {
+    if (isGameEnd) {
+      return;
+    }
     setUserAnswer(answer);
 
     if (answer.charAt(0) === "İ") {
@@ -97,7 +100,7 @@ const Game = (props) => {
   };
 
   const play = (withUserAnswer) => {
-    if (successWithPossibility(70)) {
+    if (successWithPossibility(props.difficulty)) {
       const lastLetter = getLastLetter(withUserAnswer);
       findNewName(lastLetter);
     } else {
@@ -204,6 +207,7 @@ const Game = (props) => {
             <div className={classes.flexRight}>
               <Results
                 usedWords={JSON.parse(sessionStorage.getItem("usedWords"))}
+                difficulty={props.difficulty}
               />
             </div>
           </div>

@@ -78,19 +78,25 @@ export default function CustomizedDialogs() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
+            1. The goal is simple: find a name with the last letter of the
+            opponent's answer. This is a sequential game which means you play
+            with the computer turn by turn.
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
+            2. You have only 8 seconds to answer.
           </Typography>
           <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
+            3. Once you are ready to give an answer, press speaking button to
+            turn your mic on. Then give your answer.
+          </Typography>
+          <Typography gutterBottom>
+            3. The game will end in these scenarios: You can't find an
+            answer(you lost). Your answer is not right(you lost). Computer can't
+            find an answer(you won).
+          </Typography>
+          <Typography gutterBottom>
+            4. You can choose the difficulty level from the main menu. This will
+            affect the possibility of computer to find an answer.
           </Typography>
         </DialogContent>
         <DialogActions>
