@@ -168,7 +168,7 @@ const Game = (props) => {
           (isUserTurn ? (
             <Counter timeEnds={userLost} />
           ) : (
-            <div>
+            <div style={{ marginTop: "30px" }}>
               <CircularProgress color="primary" />
               <Typography variant="h6">Computer is thinking...</Typography>
             </div>

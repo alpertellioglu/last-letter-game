@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Game from "./components/Game";
 import { Button, Typography } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
+import AudioVisualizer from "./components/AudioVisualizer";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,7 +41,7 @@ const MainContainer = () => {
   const classes = useStyles();
   const [isStarted, setIsStarted] = useState(false);
   const [score, setScore] = useState(0);
-  const [difficulty, setDifficulty] = useState(80);
+  const [difficulty, setDifficulty] = useState(70);
 
   const increaseScore = () => {
     const newScore = score + 1;
@@ -59,6 +60,7 @@ const MainContainer = () => {
     <>
       <div className={classes.container}>
         <Header score={score} />
+
         <div className={classes.menu}>
           {!isStarted ? (
             <div>
