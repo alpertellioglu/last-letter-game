@@ -1,1 +1,5 @@
-Last letter game with React and Speec Recognition (Atolye15)
+Last letter game with React
+
+`npm install`
+
+`npm start`
