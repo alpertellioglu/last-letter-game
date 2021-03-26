@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   flexLeft: {
-    marginTop: "10%",
+    marginTop: "2%",
     width: "30%",
   },
   flexRight: {
@@ -153,6 +153,11 @@ const Game = (props) => {
     setIsUserTurn(true);
   };
 
+  const handleMainMenuClicked = () => {
+    sessionStorage.setItem("usedWords", JSON.stringify([]));
+    props.backToMainMenu();
+  };
+
   return (
     <>
       <div className={classes.mainBox}>
@@ -192,16 +197,28 @@ const Game = (props) => {
                   <Typography variant="h3">You Won</Typography>
                 </div>
               )}
-
-              <Button
-                variant="outlined"
-                color="primary"
-                size="large"
-                onClick={handleRestart}
-                style={{ marginTop: "50px" }}
-              >
-                Restart
-              </Button>
+              <div>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  onClick={handleRestart}
+                  style={{ marginTop: "50px" }}
+                >
+                  Restart
+                </Button>
+              </div>
+              <div>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  size="large"
+                  onClick={handleMainMenuClicked}
+                  style={{ marginTop: "50px" }}
+                >
+                  Main Menu
+                </Button>
+              </div>
             </div>
 
             <div className={classes.flexRight}>

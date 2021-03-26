@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import Game from "./components/Game";
 import { Button, Typography } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
-import AudioVisualizer from "./components/AudioVisualizer";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -54,6 +53,11 @@ const MainContainer = () => {
 
   const handleDifficultyChange = (event, newValue) => {
     setDifficulty(newValue);
+  };
+
+  const goToMainMenu = () => {
+    setScore(0);
+    setIsStarted(false);
   };
 
   return (
@@ -105,6 +109,7 @@ const MainContainer = () => {
             <Game
               onScore={increaseScore}
               onReset={resetScore}
+              backToMainMenu={goToMainMenu}
               difficulty={difficulty}
             />
           )}

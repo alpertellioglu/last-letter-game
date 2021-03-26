@@ -1,6 +1,5 @@
 import { Button, Typography } from "@material-ui/core";
 import { React, useState } from "react";
-import AudioVisualizer from "./AudioVisualizer";
 import { ReactMic } from "react-mic";
 import { makeStyles } from "@material-ui/core/styles";
 
