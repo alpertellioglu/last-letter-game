@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import { React, useState } from "react";
 import { ReactMic } from "react-mic";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,13 +19,13 @@ const SpeechRecognition = (props) => {
   const [listening, setListening] = useState(false);
   let SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
-  let SpeechGrammarList =
-    window.SpeechGrammarList || window.webkitSpeechGrammarList;
-  let SpeechRecognitionEvent =
-    window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
+  // let SpeechGrammarList =
+  //   window.SpeechGrammarList || window.webkitSpeechGrammarList;
+  // let SpeechRecognitionEvent =
+  //   window.SpeechRecognitionEvent || window.webkitSpeechRecognitionEvent;
 
   let recognition = new SpeechRecognition();
-  let speechRecognitionList = new SpeechGrammarList();
+  // let speechRecognitionList = new SpeechGrammarList();
   //   speechRecognitionList.addFromString(grammar, 1);
   //   recognition.grammars = speechRecognitionList;
   recognition.continuous = false;
@@ -47,19 +47,17 @@ const SpeechRecognition = (props) => {
 
   recognition.onspeechend = function () {
     setListening(false);
-    console.log("recogniton should stop");
+    //console.log("recogniton should stop");
     recognition.stop();
   };
   recognition.onnomatch = function (event) {
-    console.log("I didn't recognise that name.");
+    setListening(false);
+    //console.log("I didn't recognise that name.");
   };
   recognition.onerror = function (event) {
-    console.log("Error occurred in recognition: " + event.error);
+    setListening(false);
+    //console.log("Error occurred in recognition: " + event.error);
   };
-
-  // const stopRecording = () => {
-  //   setListening(false);
-  // };
 
   return (
     <>

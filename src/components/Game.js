@@ -9,8 +9,7 @@ import Results from "./Results";
 import { speech } from "./SpeechUtterance";
 import { handleLetterI, successWithPossibility } from "./Helpers";
 import Confetti from "react-confetti";
-
-//import AudioVisualizer from "./AudioVisualizer";
+import Countdown from "react-countdown";
 
 const useStyles = makeStyles((theme) => ({
   mainBox: {
@@ -171,7 +170,15 @@ const Game = (props) => {
 
         {!isGameEnd &&
           (isUserTurn ? (
-            <Counter timeEnds={userLost} />
+            <Countdown
+              onComplete={userLost}
+              date={Date.now() + 8000}
+              intervalDelay={0}
+              precision={3}
+              renderer={(props) => (
+                <Typography variant="h2">{props.seconds}</Typography>
+              )}
+            />
           ) : (
             <div style={{ marginTop: "30px" }}>
               <CircularProgress color="primary" />

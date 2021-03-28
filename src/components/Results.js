@@ -28,29 +28,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const usedWords = [
-//   "alper",
-//   "remzi",
-//   "izel",
-//   "leyla",
-//   "ahmet",
-//   "tarik",
-//   "kemal",
-//   "lale",
-//   "emre",
-//   "alper",
-//   "remzi",
-//   "izel",
-//   "leyla",
-//   "ahmet",
-//   "tarik",
-//   "kemal",
-//   "lale",
-//   "emre",
-// ];
-
-//const usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
-
 const Results = (props) => {
   const classes = useStyles();
 

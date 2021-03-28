@@ -83,12 +83,7 @@ const MainContainer = () => {
 
               <div className={classes.menuItem}>
                 <Typography variant="h5">Difficulty</Typography>
-                {/* <Slider
-                  style={{ width: 200 }}
-                  value={difficulty}
-                  onChange={handleDifficultyChange}
-                  aria-labelledby="continuous-slider"
-                /> */}
+
                 <Slider
                   value={difficulty}
                   onChange={handleDifficultyChange}
