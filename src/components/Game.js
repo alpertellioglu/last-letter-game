@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
 import names from "../data/names.json";
-import Counter from "./Counter";
 import SpeechRecognition from "../components/SpeechRecognition";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Results from "./Results";
@@ -81,9 +80,8 @@ const Game = (props) => {
       setIsUserTurn(false);
       play(answer);
     } else {
-      console.log("user answer is not correct");
+      //console.log("user answer is not correct");
       userLost();
-      //setIsGameEnd(true);
     }
   };
 
