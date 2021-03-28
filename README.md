@@ -13,7 +13,7 @@
 
 4. Open localhost:3000 in the browser
 
-#Game Rules
+# Game Rules
 
 1. The goal is simple: find a name with the last letter of the opponent's answer. This is a sequential game which means you play with the computer turn by turn.
 
