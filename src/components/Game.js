@@ -181,7 +181,7 @@ const Game = (props) => {
           (isUserTurn ? (
             <Countdown
               onComplete={userLost}
-              date={Date.now() + 30000}
+              date={Date.now() + 8000}
               intervalDelay={0}
               precision={3}
               renderer={(props) => (
