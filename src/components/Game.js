@@ -34,10 +34,8 @@ const Game = (props) => {
   const classes = useStyles();
   let names = [];
   if (props.language === "tr") {
-    console.log("language is tr");
     names = namesTR;
   } else if (props.language === "en-US") {
-    console.log("language is en");
     names = namesEN;
   }
 
@@ -72,8 +70,6 @@ const Game = (props) => {
 
     answer = answer.toLowerCase();
 
-    console.log("User answer is: " + answer);
-
     const lastLetterOfComputerAnswer = getLastLetter(randomName);
     const possibleCorrectAnswers = names.filter(
       (name) => name.charAt(0) === lastLetterOfComputerAnswer
@@ -91,7 +87,6 @@ const Game = (props) => {
       setIsUserTurn(false);
       play(answer);
     } else {
-      console.log("user answer is not correct");
       userLost();
     }
   };
@@ -99,10 +94,8 @@ const Game = (props) => {
   const isAlreadyUsed = (answer) => {
     const alreadyUsedAnswers = JSON.parse(sessionStorage.getItem("usedWords"));
     if (alreadyUsedAnswers.includes(answer)) {
-      console.log("answer is already used");
       return true;
     } else {
-      //console.log("answer has not used yet");
       return false;
     }
   };
@@ -112,7 +105,7 @@ const Game = (props) => {
       const lastLetter = getLastLetter(withUserAnswer);
       findNewName(lastLetter);
     } else {
-      console.log("computer can not find an answer");
+      //console.log("computer can not find an answer");
       setTimeout(function () {
         setWhoWon("user");
         stopTheGame();

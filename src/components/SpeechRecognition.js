@@ -34,13 +34,12 @@ const SpeechRecognition = (props) => {
 
   recognition.onresult = function (event) {
     const answer = event.results[0][0].transcript;
-    console.log("Confidence: " + event.results[0][0].confidence);
+    //console.log("Confidence: " + event.results[0][0].confidence);
     props.onUserAnswer(answer);
   };
 
   recognition.onspeechend = function () {
     setListening(false);
-    //console.log("recogniton should stop");
     recognition.stop();
   };
   recognition.onnomatch = function (event) {
