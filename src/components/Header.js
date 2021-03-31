@@ -4,8 +4,6 @@ import { Box, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   mainBox: {
-    //backgroundColor: "red",
-    // height: "20%",
     width: "80%",
     border: "2px solid grey",
     borderRadius: "20px",
