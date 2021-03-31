@@ -1,9 +1,9 @@
-function speech(phrase) {
+function speech(phrase, lang) {
   let synth = window.speechSynthesis;
 
   const utterThis = new SpeechSynthesisUtterance(phrase);
 
-  utterThis.lang = "tr";
+  utterThis.lang = lang;
 
   synth.speak(utterThis);
 }

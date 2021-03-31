@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Game from "./components/Game";
 import { Button, Typography } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -19,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     margin: "50px",
+  },
+  toggleBtn: {
+    color: "black",
+    border: "1px solid grey",
   },
 }));
 
@@ -41,6 +47,7 @@ const MainContainer = () => {
   const [isStarted, setIsStarted] = useState(false);
   const [score, setScore] = useState(0);
   const [difficulty, setDifficulty] = useState(70);
+  const [language, setLanguage] = useState("tr");
 
   const increaseScore = () => {
     const newScore = score + 1;
@@ -58,6 +65,12 @@ const MainContainer = () => {
   const goToMainMenu = () => {
     setScore(0);
     setIsStarted(false);
+  };
+
+  const handleLanguageChange = (event, newLanguage) => {
+    if (newLanguage !== null) {
+      setLanguage(newLanguage);
+    }
   };
 
   return (
@@ -79,6 +92,29 @@ const MainContainer = () => {
                 >
                   Start the Game
                 </Button>
+              </div>
+              <div>
+                <ToggleButtonGroup
+                  value={language}
+                  exclusive
+                  onChange={handleLanguageChange}
+                  aria-label="Language"
+                >
+                  <ToggleButton
+                    value="tr"
+                    aria-label="tr"
+                    style={{ color: language === "tr" && "white" }}
+                  >
+                    "tr"
+                  </ToggleButton>
+                  <ToggleButton
+                    value="en-US"
+                    aria-label="en-US"
+                    style={{ color: language === "en-US" && "white" }}
+                  >
+                    "en-US"
+                  </ToggleButton>
+                </ToggleButtonGroup>
               </div>
 
               <div className={classes.menuItem}>
@@ -106,6 +142,7 @@ const MainContainer = () => {
               onReset={resetScore}
               backToMainMenu={goToMainMenu}
               difficulty={difficulty}
+              language={language}
             />
           )}
         </div>

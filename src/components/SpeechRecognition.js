@@ -22,7 +22,7 @@ const SpeechRecognition = (props) => {
 
   let recognition = new SpeechRecognition();
   recognition.continuous = false;
-  recognition.lang = "tr";
+  recognition.lang = props.language;
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
 

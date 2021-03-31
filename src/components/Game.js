@@ -1,7 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
-import names from "../data/names.json";
+import namesTR from "../data/names.json";
+import namesEN from "../data/en-names.json";
 import SpeechRecognition from "../components/SpeechRecognition";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Results from "./Results";
@@ -31,6 +32,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Game = (props) => {
   const classes = useStyles();
+  let names = [];
+  if (props.language === "tr") {
+    console.log("language is tr");
+    names = namesTR;
+  } else if (props.language === "en-US") {
+    console.log("language is en");
+    names = namesEN;
+  }
+
   const [isUserTurn, setIsUserTurn] = useState(true);
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [whoWon, setWhoWon] = useState("");
@@ -43,7 +53,7 @@ const Game = (props) => {
     let mounted = true;
     if (mounted) {
       let usedWords = JSON.parse(sessionStorage.getItem("usedWords"));
-      speech(randomName);
+      speech(randomName, props.language);
       usedWords.push(randomName);
       sessionStorage.setItem("usedWords", JSON.stringify(usedWords));
     }
@@ -61,6 +71,7 @@ const Game = (props) => {
     }
 
     answer = answer.toLowerCase();
+
     console.log("User answer is: " + answer);
 
     const lastLetterOfComputerAnswer = getLastLetter(randomName);
@@ -80,7 +91,7 @@ const Game = (props) => {
       setIsUserTurn(false);
       play(answer);
     } else {
-      //console.log("user answer is not correct");
+      console.log("user answer is not correct");
       userLost();
     }
   };
@@ -88,7 +99,7 @@ const Game = (props) => {
   const isAlreadyUsed = (answer) => {
     const alreadyUsedAnswers = JSON.parse(sessionStorage.getItem("usedWords"));
     if (alreadyUsedAnswers.includes(answer)) {
-      //console.log("answer is already used");
+      console.log("answer is already used");
       return true;
     } else {
       //console.log("answer has not used yet");
@@ -170,7 +181,7 @@ const Game = (props) => {
           (isUserTurn ? (
             <Countdown
               onComplete={userLost}
-              date={Date.now() + 8000}
+              date={Date.now() + 30000}
               intervalDelay={0}
               precision={3}
               renderer={(props) => (
@@ -185,7 +196,10 @@ const Game = (props) => {
           ))}
 
         {isUserTurn && !isGameEnd && (
-          <SpeechRecognition onUserAnswer={checkUserAnswer} />
+          <SpeechRecognition
+            onUserAnswer={checkUserAnswer}
+            language={props.language}
+          />
         )}
 
         {isGameEnd && (
